@@ -1,0 +1,22 @@
+<div class="modal fade" id="delete_modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FA675F; color: white">
+                <h5 class="modal-title" id="ModalLabel">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fw-bold">Вы действительно хотите удалить этот проект?</p>
+                <p>Это действие невозможно отменить, и вся связанная информация будет удалена.</p>
+                <p>Пожалуйста, подтвердите, что вы хотите продолжить.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="" id="deleteForm">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

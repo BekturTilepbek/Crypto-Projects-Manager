@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h3 class="mb-3">Детали проекта {{ project.name }}</h3>
+
+    <div class="info">
+        <p>{{ project.description }}</p>
+        <p>{{ project.status }}</p>
+        <p>{{ project.priority }}</p>
+        <p>{{ project.info }}</p>
+    </div>
+
+    <div class="links mb-2">
+        <p>Ссылки:</p>
+
+        <div>
+            {% for link in project.links.all %}
+                <p>{{ link.type }}: <a href="{{ link.url }}" target="_blank">{{ link.url }}</a></p>
+            {% empty %}
+                <p>Ссылок нет</p>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'webapp:create_link' project.pk %}" class="btn btn-primary">Добавить ссылку</a>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'webapp:update_project' project.pk %}" class="btn btn-success">Обновить проект</a>
+
+        <button type="button" class="btn btn-danger" data-js="delete_btn"
+                data-url="{% url 'webapp:delete_project' project.pk %}">
+            Удалить проект
+        </button>
+    </div>
+
+    {% include 'project/delete_project_modal.html' %}
+
+    <script src="{% static 'js/delete_project.js' %}"></script>
+
+{% endblock %}

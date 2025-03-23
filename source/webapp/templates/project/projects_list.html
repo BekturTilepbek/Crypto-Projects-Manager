@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-3">Ваши проекты</h3>
+
+<div class="table-responsive">
+
+    <div class="mb-2">
+        <span>Сортировать:</span>
+        <form method="get" class="d-inline">
+            <select name="sort" class="form-select d-inline" onchange="this.form.submit()">
+                <option value="desc" {% if request.GET.sort == 'desc' %}selected{% endif %}>От лучших к
+                    худшим
+                </option>
+                <option value="asc" {% if request.GET.sort == 'asc' %}selected{% endif %}>От худших к
+                    лучшим
+                </option>
+            </select>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Приоритет</th>
+
+            <th scope="col">Ссылки</th>
+
+
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.name }}</td>
+            <td>{{ project.get_status_display }}</td>
+            <td>{{ project.get_priority_display }}</td>
+
+            <td>
+                {% for link in project.links.all %}
+                <p>{{ link.get_type_display }}: <a href="{{ link.url }}" target="_blank">{{ link.url }}</a></p>
+                {% endfor %}
+            </td>
+
+            <td>
+                <a href="{% url 'webapp:update_project' project.pk %}" class="btn btn-success">Изменить</a>
+                <a href="{% url 'webapp:project_detail' project.pk %}" class="btn btn-primary">Детально</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+    {% include "partial/pagination.html" %}
+{% endif %}
+{% endblock %}
